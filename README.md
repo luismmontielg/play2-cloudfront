@@ -1,6 +1,6 @@
 # Cloudfront module for play 2
 
-Cloudfront enables to set up a CDN easily. This module helps to integrate your Cloudfront CDN with play.
+Cloudfront enables to set up a CDN easily. This module helps to integrate your Cloudfront CDN with play. It also allows to point to specific URLs for particular files when you want to serve them from other CDNs.
 
 ## Setting up with sbt
 
@@ -51,7 +51,7 @@ Update your views to refer to your controller to fetch the url:
         <title>@title</title>
         <link rel="stylesheet" media="screen" href="@RemoteAssets.url("stylesheets/main.css")">
         <link rel="shortcut icon" type="image/png" href="@RemoteAssets.url("images/favicon.png")">
-        <script src="@RemoteAssets.url("javascripts/jquery-1.7.1.min.js")" type="text/javascript"></script>
+        <script src="@RemoteAssets.url("javascripts/jquery-1.9.0.min.js")" type="text/javascript"></script>
     </head>
     <body>
         @content
@@ -62,10 +62,15 @@ Update your views to refer to your controller to fetch the url:
 
 ## Configure the module with your cloudfront settings
 
-Add your Cloudfront url to the `application.conf`:
+Add your Cloudfront url and CDN paths for particular files to the `application.conf`:
 
 ```properties
-cdn-url="http://d7471vfo50fqt.cloudfront.net"
+remote-assets {
+  default-cdn = "http://d7471vfo50fqt.cloudfront.net"
+  resources {
+    javascripts/jquery-1.9.0.min.js = "//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"
+  }
+}
 ```
 
 ## More

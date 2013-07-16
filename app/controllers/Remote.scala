@@ -27,11 +27,12 @@ trait Remote extends Controller {
   }
 
   def url(file: String) = {
-    Play.configuration.getString("cdn-url") match {
-      case Some(contentUrl) => contentUrl + call(file).url
-      case None => call(file)
+    Play.configuration.getString(s"remote-assets.resources.$file") getOrElse {
+      Play.configuration.getString("remote-assets.default-cdn") match {
+        case Some(contentUrl) => contentUrl + call(file).url
+        case None => call(file)
+      }
     }
-
   }
 
   def call(file: String): Call
