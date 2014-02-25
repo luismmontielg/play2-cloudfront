@@ -8,7 +8,8 @@ import org.joda.time.format.DateTimeFormatter
 import org.joda.time.DateTimeZone
 import java.util.Date
 import scala.Some
-
+import scala.concurrent.Future
+import play.api.libs.concurrent.Execution.Implicits.defaultContext
 
 trait Remote extends Controller {
 
