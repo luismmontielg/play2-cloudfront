@@ -17,14 +17,15 @@ trait Remote extends Controller {
   private val df: DateTimeFormatter =
     DateTimeFormat.forPattern("EEE, dd MMM yyyy HH:mm:ss '"+timeZoneCode+"'").withLocale(java.util.Locale.ENGLISH).withZone(DateTimeZone.forID(timeZoneCode))
 
-  type ResultWithHeaders = Result { def withHeaders(headers: (String, String)*): Result }
+    type ResultWithHeaders = SimpleResult { def withHeaders(headers: (String, String)*): Result }
 
-  def at(path: String, file: String): Action[AnyContent] = Action { request =>
-    val action = Assets.at(path, file)
-    val result = action.apply(request)
-    val resultWithHeaders = result.asInstanceOf[ResultWithHeaders]
-    resultWithHeaders.withHeaders(DATE -> df.print((new Date).getTime))
+    def at(path: String, file: String): Action[AnyContent] = Action.async { request =>
+      val action = Assets.at(path, file)
+      val result = action.apply(request)
+      val resultWithHeaders = result.map(r => r.withHeaders(DATE -> df.print((new Date).getTime)))
+      resultWithHeaders
   }
+
 
   def url(file: String) = {
     Play.configuration.getString("cdn-url") match {
