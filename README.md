@@ -7,14 +7,14 @@ Cloudfront enables to set up a CDN easily. This module helps to integrate your C
 Configure a new resolver:
 
 ```scala
-resolvers += Resolver.url("Paweł Mandera github repo play2-cloudfront", 
-                          url("http://pmandera.github.com/releases/"))(Resolver.ivyStylePatterns)
+resolvers += Resolver.url("Luis Montiel github repo play2-cloudfront", 
+                          url("http://luismmontielg.github.com/releases/"))(Resolver.ivyStylePatterns)
 ```
 
 Add the library dependency:
 
 ```scala
-libraryDependencies += "mchv" %% "play2-cloudfront" % "1.1"
+libraryDependencies += "mchv" %% "play2-cloudfront" % "1.2"
 ```
 
 ## Use a custom controller
